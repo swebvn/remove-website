@@ -1,0 +1,29 @@
+---
+- name: copy scrip to remote host
+  template:
+    src: templates/check.sh.j2
+    dest: /tmp/check.sh
+    mode: 755
+
+- name: copy scrip to remote host
+  template:
+    src: templates/rclone_backup_when_remove.conf
+    dest: /tmp/rclone_backup_when_remove.conf
+    mode: 755
+    
+- name: make sure delete file variables
+  shell: sudo rm -rf /tmp/variables.txt
+  ignore_errors: yes
+
+- name: run script to collect info
+  shell: bash /tmp/check.sh
+  ignore_errors: yes
+  register: check
+
+- name: copy file contain variable to localhost
+  synchronize:
+    mode: pull
+    src: /tmp/variables.txt
+    dest: group_vars
+
+- debug: var={{ check.stdout_lines }}

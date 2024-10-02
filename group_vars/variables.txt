@@ -1,0 +1,4 @@
+user_domain: nongtraixa
+server_name: nongtraixachtay.com
+mysql_database: nongtraixa_data
+mysql_user: nongtraixa_user
