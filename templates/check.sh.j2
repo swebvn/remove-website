@@ -1,6 +1,6 @@
 string="{{Domain}}"
 
-find /etc/nginx/conf.d/ -type f -name '*.conf' -print0 | xargs -0 egrep '^(\s|\t)*server_name' | sed -r 's/(.*server_name\s*|;)//g' | tr -s ' ' '\n' | sort | uniq | sed '/^www/d' | grep -Ev '\_|\#|\by|\Certbot|\managed|tda|TDA' | grep $string
+find /etc/nginx/conf.d/ -type f -name '*.conf' -print0 | xargs -0 egrep '^(\s|\t)*server_name' | sed -r 's/(.*server_name\s*|;)//g' | tr -s ' ' '\n' | sort | uniq | sed '/^www/d' | grep -Ev '\_|\#|\Certbot|\managed|tda|TDA' | grep $string
 
 if [[ $? -eq 0 ]]; then
 	path=`cat /etc/nginx/conf.d/${string}.conf | sed -n 's/.*root \(.*\);/\1/p'`
